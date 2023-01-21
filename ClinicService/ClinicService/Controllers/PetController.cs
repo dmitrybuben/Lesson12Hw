@@ -30,6 +30,11 @@ namespace ClinicService.Controllers
         [SwaggerOperation(OperationId = "PetUpdate")]
         public ActionResult<int> Update([FromBody] UpdatePetRequest updatePetRequest)
         {
+            
+            if (updatePetRequest.PetId == 0 || updatePetRequest.Name.Length < 3) 
+                {
+                    return BadRequest(0); 
+                }
             return Ok(1);
         }
 
@@ -48,6 +53,10 @@ namespace ClinicService.Controllers
         [SwaggerOperation(OperationId = "PetGetAll")]
         public ActionResult<List<Pet>> GetAll(int clientId)
         {
+            if(clientId <= 0) 
+            {
+                return BadRequest(0);
+            }
             return Ok(new List<Pet>());
         }
 
@@ -55,7 +64,16 @@ namespace ClinicService.Controllers
         [SwaggerOperation(OperationId = "GetById")]
         public ActionResult<Client> GetById(int id)
         {
+            if(id <= 0) 
+            {
+                return BadRequest(0);
+            }
             return Ok(new Pet());
+        }
+
+        public ActionResult<int> GetAll(object clientId)
+        {
+            throw new NotImplementedException();
         }
     }
 }
